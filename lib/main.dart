@@ -15,9 +15,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shopper App',
-      theme: AppTheme.lightTheme,
-      home: BlocProvider(create: (context) => AuthBloc(), child: LoginPage()),
-      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme, // <-- Use your new light theme
+      darkTheme: AppTheme.darkTheme, // <-- Add the dark theme
+      themeMode: ThemeMode.system, // <-- Automatically switch themes
+      debugShowCheckedModeBanner:
+          false, // <-- A nice touch to remove the debug banner
+      home: BlocProvider(
+        create: (context) => AuthBloc(),
+        child: const LoginPage(),
+      ),
     );
   }
 }
