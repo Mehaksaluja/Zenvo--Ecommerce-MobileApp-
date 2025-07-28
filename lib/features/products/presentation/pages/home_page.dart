@@ -8,6 +8,7 @@ import 'package:shopper_app/features/products/bloc/product_event.dart';
 import 'package:shopper_app/features/products/bloc/product_state.dart';
 import 'package:shopper_app/features/products/presentation/pages/product_detail_page.dart';
 import 'package:shopper_app/features/products/presentation/widgets/product_card.dart';
+import 'package:shopper_app/features/wishlist/presentation/pages/wishlist_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -41,6 +42,53 @@ class _HomePageState extends State<HomePage> {
     return BlocProvider(
       create: (context) => ProductBloc()..add(FetchAllProducts()),
       child: Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: Text(
+                  'Zenvo',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineSmall?.copyWith(color: Colors.white),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.home_outlined),
+                title: const Text('Home'),
+                onTap: () => Navigator.pop(context),
+              ),
+              ListTile(
+                leading: const Icon(Icons.shopping_cart_outlined),
+                title: const Text('My Cart'),
+                onTap: () {
+                  Navigator.pop(context); // Close the drawer
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CartPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.favorite_border),
+                title: const Text('My Wishlist'),
+                onTap: () {
+                  Navigator.pop(context); // Close the drawer
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const WishlistPage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
         body: BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
             // Main scrolling view that combines all sections
@@ -71,12 +119,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // --- Helper Widgets to keep the build method clean ---
-
   SliverAppBar _buildSliverAppBar(BuildContext context) {
     return SliverAppBar(
       title: Text(
-        'Shopper',
+        'Zenvo',
         style: Theme.of(
           context,
         ).textTheme.headlineSmall?.copyWith(color: Colors.white),
@@ -92,7 +138,6 @@ class _HomePageState extends State<HomePage> {
             decoration: InputDecoration(
               hintText: 'Search products...',
               prefixIcon: const Icon(Icons.search),
-              // Use a filled decoration to make it stand out against the AppBar
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
