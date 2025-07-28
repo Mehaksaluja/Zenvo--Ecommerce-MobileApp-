@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopper_app/features/cart/bloc/cart_bloc.dart';
 import 'package:shopper_app/features/cart/bloc/cart_event.dart';
 import 'package:shopper_app/features/cart/bloc/cart_state.dart';
+import 'package:shopper_app/features/checkout/presentation/pages/checkout_page.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -64,7 +65,6 @@ class CartPage extends StatelessWidget {
                                 color: Colors.red,
                               ),
                               onPressed: () {
-                                // --- UPDATE THIS FUNCTION ---
                                 context.read<CartBloc>().add(
                                   RemoveItemFromCart(item),
                                 );
@@ -115,7 +115,14 @@ class CartPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: FilledButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CheckoutPage(),
+                              ),
+                            );
+                          },
                           child: const Text('Proceed to Checkout'),
                         ),
                       ),

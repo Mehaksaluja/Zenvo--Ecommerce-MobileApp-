@@ -12,3 +12,5 @@ class RemoveItemFromCart extends CartEvent {
   final Map<String, dynamic> product;
   RemoveItemFromCart(this.product);
 }
+
+class ClearCart extends CartEvent {}

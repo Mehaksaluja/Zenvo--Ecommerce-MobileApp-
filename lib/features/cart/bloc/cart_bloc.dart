@@ -12,10 +12,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(CartUpdated(List.from(_cartItems)));
     });
     on<RemoveItemFromCart>((event, emit) {
-      // Find and remove the product by its unique ID.
       _cartItems.removeWhere((item) => item['id'] == event.product['id']);
 
-      // Emit the updated state with a copy of the new list.
+      emit(CartUpdated(List.from(_cartItems)));
+    });
+    on<ClearCart>((event, emit) {
+      _cartItems.clear();
       emit(CartUpdated(List.from(_cartItems)));
     });
   }

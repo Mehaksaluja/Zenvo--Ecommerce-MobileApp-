@@ -48,10 +48,8 @@ class ProductDetailPage extends StatelessWidget {
               width: double.infinity,
               child: FilledButton.icon(
                 onPressed: () {
-                  // Find the CartBloc and add the event
                   context.read<CartBloc>().add(AddItemToCart(product));
 
-                  // Show a confirmation message
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Item added to cart!'),

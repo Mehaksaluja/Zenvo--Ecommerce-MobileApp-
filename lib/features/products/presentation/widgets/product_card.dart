@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap, // Use the provided onTap function
+      onTap: onTap,
       child: Card(
         clipBehavior: Clip.antiAlias,
         child: Stack(

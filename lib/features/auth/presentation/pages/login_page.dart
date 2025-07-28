@@ -26,11 +26,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Get text styles from the current theme for consistency.
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      // We don't need an AppBar for a modern login screen.
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthFailure) {
@@ -46,12 +44,10 @@ class _LoginPageState extends State<LoginPage> {
         },
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            // Show a full-screen loading indicator
             if (state is AuthLoading) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            // The main UI
             return SafeArea(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -60,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // 1. Header Section
                       const SizedBox(height: 60),
                       Text(
                         'Welcome Back!',
@@ -77,7 +72,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 50),
 
-                      // 2. Email & Password Fields
                       Text('Email', style: textTheme.labelLarge),
                       const SizedBox(height: 8),
                       TextFormField(
@@ -99,7 +93,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 40),
 
-                      // 3. Sign In Button
                       FilledButton(
                         onPressed: () {
                           context.read<AuthBloc>().add(
@@ -113,7 +106,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 50),
 
-                      // 4. "Or continue with" Divider
                       Row(
                         children: [
                           const Expanded(child: Divider()),
@@ -128,14 +120,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 30),
 
-                      // 5. Social Login Buttons
                       OutlinedButton.icon(
-                        icon: const Icon(
-                          Icons.apple,
-                        ), // Replace with a proper logo if available
-                        onPressed: () {
-                          /* Social login logic goes here */
-                        },
+                        icon: const Icon(Icons.apple),
+                        onPressed: () {},
                         label: const Text('Continue with Apple'),
                       ),
                       const SizedBox(height: 16),

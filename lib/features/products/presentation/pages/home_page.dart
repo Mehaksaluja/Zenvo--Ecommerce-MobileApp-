@@ -18,7 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // State for managing category selection
   final List<String> categories = [
     'All',
     'Electronics',
@@ -32,13 +31,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _searchController.dispose(); // Don't forget to dispose of it!
+    _searchController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Provide the ProductBloc and fetch all products initially
     return BlocProvider(
       create: (context) => ProductBloc()..add(FetchAllProducts()),
       child: Scaffold(
@@ -66,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                 leading: const Icon(Icons.shopping_cart_outlined),
                 title: const Text('My Cart'),
                 onTap: () {
-                  Navigator.pop(context); // Close the drawer
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const CartPage()),
@@ -77,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                 leading: const Icon(Icons.favorite_border),
                 title: const Text('My Wishlist'),
                 onTap: () {
-                  Navigator.pop(context); // Close the drawer
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -91,7 +89,6 @@ class _HomePageState extends State<HomePage> {
         ),
         body: BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
-            // Main scrolling view that combines all sections
             return CustomScrollView(
               slivers: [
                 _buildSliverAppBar(context),
@@ -101,7 +98,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SliverToBoxAdapter(child: _buildHorizontalProductList(state)),
 
-                // --- RE-INTRODUCED CATEGORY FILTERS ---
                 SliverToBoxAdapter(
                   child: _buildSectionHeader(context, "Categories"),
                 ),
@@ -147,7 +143,6 @@ class _HomePageState extends State<HomePage> {
               contentPadding: EdgeInsets.zero,
             ),
             onChanged: (query) {
-              // Add the search event to the BLoC
               context.read<ProductBloc>().add(SearchProducts(query));
             },
           ),
@@ -182,7 +177,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildHeroSection(BuildContext context) {
-    // This widget is unchanged
     return Container(
       height: 250,
       margin: const EdgeInsets.all(16.0),
@@ -299,7 +293,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
-    return const SizedBox.shrink(); // Return an empty box if products aren't loaded yet
+    return const SizedBox.shrink();
   }
 
   Widget _buildCategoryChips(BuildContext context) {
