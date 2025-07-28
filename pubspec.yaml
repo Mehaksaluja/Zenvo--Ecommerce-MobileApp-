@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^6.2.1
   http: ^1.4.0
   carousel_slider: ^5.1.1
+  bloc_concurrency: ^0.3.0
 
 dev_dependencies:
   flutter_test:
