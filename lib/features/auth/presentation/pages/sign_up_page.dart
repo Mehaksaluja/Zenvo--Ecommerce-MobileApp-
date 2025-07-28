@@ -4,22 +4,23 @@ import 'package:shopper_app/features/auth/bloc/auth_bloc.dart';
 import 'package:shopper_app/features/auth/bloc/auth_event.dart';
 import 'package:shopper_app/features/auth/bloc/auth_state.dart';
 import 'package:shopper_app/features/products/presentation/pages/home_page.dart';
-import 'package:shopper_app/features/auth/presentation/pages/sign_up_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -37,9 +38,11 @@ class _LoginPageState extends State<LoginPage> {
               context,
             ).showSnackBar(SnackBar(content: Text(state.message)));
           } else if (state is AuthSuccess) {
-            Navigator.pushReplacement(
+            // On success, navigate to home and remove all previous screens
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const HomePage()),
+              (route) => false,
             );
           }
         },
@@ -57,15 +60,16 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      // --- HEADER ---
                       const SizedBox(height: 60),
                       Text(
-                        'Welcome Back!',
+                        'Create Account',
                         textAlign: TextAlign.center,
                         style: textTheme.headlineMedium,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Sign in to continue to your account',
+                        'Fill in your details to get started',
                         textAlign: TextAlign.center,
                         style: textTheme.bodyLarge?.copyWith(
                           color: Colors.grey.shade600,
@@ -73,6 +77,17 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 50),
 
+                      // --- FORM FIELDS ---
+                      Text('Full Name', style: textTheme.labelLarge),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _nameController,
+                        decoration: const InputDecoration(
+                          hintText: 'Your full name',
+                        ),
+                        keyboardType: TextInputType.name,
+                      ),
+                      const SizedBox(height: 20),
                       Text('Email', style: textTheme.labelLarge),
                       const SizedBox(height: 8),
                       TextFormField(
@@ -89,24 +104,26 @@ class _LoginPageState extends State<LoginPage> {
                         controller: _passwordController,
                         obscureText: true,
                         decoration: const InputDecoration(
-                          hintText: 'Your password',
+                          hintText: 'Create a password',
                         ),
                       ),
                       const SizedBox(height: 40),
 
+                      // --- PRIMARY BUTTON ---
                       FilledButton(
                         onPressed: () {
                           context.read<AuthBloc>().add(
-                            LoginButtonPressed(
+                            SignUpButtonPressed(
                               email: _emailController.text,
                               password: _passwordController.text,
                             ),
                           );
                         },
-                        child: const Text('Sign In'),
+                        child: const Text('Create Account'),
                       ),
                       const SizedBox(height: 50),
 
+                      // --- DIVIDER & SOCIAL LOGINS ---
                       Row(
                         children: [
                           const Expanded(child: Divider()),
@@ -120,7 +137,6 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                       const SizedBox(height: 30),
-
                       OutlinedButton.icon(
                         icon: const Icon(Icons.apple),
                         onPressed: () {},
@@ -128,34 +144,26 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 16),
                       OutlinedButton.icon(
-                        icon: const Icon(
-                          Icons.g_mobiledata,
-                        ), // Replace with a proper logo
-                        onPressed: () {
-                          /* Social login logic goes here */
-                        },
+                        icon: const Icon(Icons.g_mobiledata),
+                        onPressed: () {},
                         label: const Text('Continue with Google'),
                       ),
-
                       const SizedBox(height: 40),
 
+                      // --- NAVIGATE BACK TO LOGIN ---
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Don't have an account?",
+                            "Already have an account?",
                             style: textTheme.bodyMedium,
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SignUpPage(),
-                                ),
-                              );
+                              // Pop the current screen to go back to the login page
+                              Navigator.pop(context);
                             },
-                            child: const Text('Sign Up'),
+                            child: const Text('Sign In'),
                           ),
                         ],
                       ),

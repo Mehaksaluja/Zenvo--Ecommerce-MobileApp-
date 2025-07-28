@@ -19,5 +19,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthFailure(e.toString()));
       }
     });
+
+    on<SignUpButtonPressed>((event, emit) async {
+      emit(AuthLoading());
+      await Future.delayed(const Duration(seconds: 1));
+
+      if (event.email.isNotEmpty && event.password.isNotEmpty) {
+        emit(AuthSuccess());
+      } else {
+        emit(AuthFailure('Please fill all fields.'));
+      }
+    });
   }
 }
