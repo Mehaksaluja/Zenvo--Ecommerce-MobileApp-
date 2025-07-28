@@ -20,7 +20,6 @@ class CheckoutPage extends StatelessWidget {
         body: BlocListener<CheckoutBloc, CheckoutState>(
           listener: (context, state) {
             if (state is CheckoutSuccess) {
-              // Clear the main cart and navigate to success screen
               context.read<CartBloc>().add(ClearCart());
               Navigator.pushAndRemoveUntil(
                 context,

@@ -128,12 +128,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 16),
                       OutlinedButton.icon(
-                        icon: const Icon(
-                          Icons.g_mobiledata,
-                        ), // Replace with a proper logo
-                        onPressed: () {
-                          /* Social login logic goes here */
-                        },
+                        icon: const Icon(Icons.g_mobiledata),
+                        onPressed: () {},
                         label: const Text('Continue with Google'),
                       ),
 

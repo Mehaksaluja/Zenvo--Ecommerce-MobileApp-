@@ -7,7 +7,6 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductBloc() : super(ProductInitial()) {
-    // Handler for fetching all products
     on<FetchAllProducts>((event, emit) async {
       emit(ProductLoading());
       try {
@@ -25,11 +24,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     });
 
-    // --- ADD THIS NEW HANDLER FOR FILTERING ---
     on<FilterProductsByCategory>((event, emit) async {
       emit(ProductLoading());
       try {
-        // Use the API endpoint for categories
         final response = await http.get(
           Uri.parse(
             'https://fakestoreapi.com/products/category/${event.category.toLowerCase()}',
@@ -47,7 +44,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     });
 
     on<SearchProducts>((event, emit) async {
-      // If the search query is empty, just fetch all products.
       if (event.query.isEmpty) {
         add(FetchAllProducts());
         return;
@@ -60,7 +56,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         );
         if (response.statusCode == 200) {
           final List<dynamic> allProducts = jsonDecode(response.body);
-          // Filter the products locally
           final filteredProducts = allProducts.where((product) {
             return product['title'].toString().toLowerCase().contains(
               event.query.toLowerCase(),
@@ -73,6 +68,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       } catch (e) {
         emit(ProductFailure(e.toString()));
       }
-    }, transformer: restartable()); // <-- USE THE RESTARTABLE TRANSFORMER
+    }, transformer: restartable());
   }
 }

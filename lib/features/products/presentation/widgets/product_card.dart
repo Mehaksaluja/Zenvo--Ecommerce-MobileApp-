@@ -68,7 +68,7 @@ class ProductCard extends StatelessWidget {
                   }
 
                   return CircleAvatar(
-                    backgroundColor: Colors.white.withOpacity(0.8),
+                    backgroundColor: Colors.white.withValues(alpha: 0.8),
                     child: IconButton(
                       icon: Icon(
                         isWishlisted ? Icons.favorite : Icons.favorite_border,

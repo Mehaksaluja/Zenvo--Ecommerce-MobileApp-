@@ -38,7 +38,6 @@ class _SignUpPageState extends State<SignUpPage> {
               context,
             ).showSnackBar(SnackBar(content: Text(state.message)));
           } else if (state is AuthSuccess) {
-            // On success, navigate to home and remove all previous screens
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const HomePage()),
@@ -60,7 +59,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // --- HEADER ---
                       const SizedBox(height: 60),
                       Text(
                         'Create Account',
@@ -77,7 +75,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       const SizedBox(height: 50),
 
-                      // --- FORM FIELDS ---
                       Text('Full Name', style: textTheme.labelLarge),
                       const SizedBox(height: 8),
                       TextFormField(
@@ -109,7 +106,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       const SizedBox(height: 40),
 
-                      // --- PRIMARY BUTTON ---
                       FilledButton(
                         onPressed: () {
                           context.read<AuthBloc>().add(
@@ -123,7 +119,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       const SizedBox(height: 50),
 
-                      // --- DIVIDER & SOCIAL LOGINS ---
                       Row(
                         children: [
                           const Expanded(child: Divider()),
@@ -150,7 +145,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       const SizedBox(height: 40),
 
-                      // --- NAVIGATE BACK TO LOGIN ---
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -160,7 +154,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              // Pop the current screen to go back to the login page
                               Navigator.pop(context);
                             },
                             child: const Text('Sign In'),
